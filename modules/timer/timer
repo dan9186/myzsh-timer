@@ -1,15 +1,34 @@
-function countdown(){
-   date1=$((`date +%s` + $1 ))
-   while [ "$date1" -ne `date +%s` ]; do 
-		echo -ne "\r$(date -u -r $(($date1 - `date +%s`)) +%H:%M:%S)";
-   done
-   echo -e "\n"
-}
-function stopwatch(){
-	date1=`date +%s`; 
-	while true; do 
-		echo -ne "\r$(date -u -r $((`date +%s` - $date1)) +%H:%M:%S)"; 
-   done
-   echo -e "\n"
-}
+if isosx; then
+	function countdown(){
+	   date1=$((`date +%s` + $1 ))
+	   while [ "$date1" -ne `date +%s` ]; do 
+			echo -ne "\r$(date -u -r $(($date1 - `date +%s`)) +%H:%M:%S)";
+	   done
+	   echo -e "\n"
+	}
+	function stopwatch(){
+		date1=`date +%s`; 
+		while true; do 
+			echo -ne "\r$(date -u -r $((`date +%s` - $date1)) +%H:%M:%S)"; 
+	   done
+	   echo -e "\n"
+	}
+fi
+
+if islinux; then
+	function countdown(){
+	   date1=$((`date +%s` + $1 ))
+	   while [ "$date1" -ne `date +%s` ]; do 
+			echo -ne "\r$(date -u -d @$(($date1 - `date +%s`)) +%H:%M:%S)";
+	   done
+	   echo -e "\n"
+	}
+	function stopwatch(){
+		date1=`date +%s`; 
+		while true; do 
+			echo -ne "\r$(date -u -d @$((`date +%s` - $date1)) +%H:%M:%S)"; 
+	   done
+	   echo -e "\n"
+	}
+fi
 # vim: filetype=zsh noexpandtab
